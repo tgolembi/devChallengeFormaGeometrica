@@ -37,4 +37,10 @@ Entrega:
 
 ## SOLUÇÃO PROPOSTA
 
-...
+Foi decidido criar novos projetos usando .NET 8, já que esta versão tem suporte de longo prazo, maior desempenho e performance, novas funcionalidades e mais segurança.
+
+Foi realizada uma arquitetura mais modular para facilita a manutenção e escalabilidade.
+
+O código anterior tinha forte acoplamento, responsabilidades múltiplas em classes únicas, com uma lógica difícil de manter.
+Foi refatorada  utilizando os princípios SOLID e código limpo.
+
