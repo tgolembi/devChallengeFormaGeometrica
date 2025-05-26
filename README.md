@@ -38,7 +38,8 @@ Entrega:
 ## SOLUÇÃO PROPOSTA
 
 Foi decidido reestruturar o projeto usando .NET 8, versão com suporte de longo prazo (LTS), melhor desempenho, recursos atualizados e maior segurança.
-Essa atualização garante uma base tecnológica moderna e sustentável a longo prazo.
+Foi feita uma migração dos testes para usar o Xunit, que é um frameworks de teste muito utilizado no .NET. isto permite melhor integração com CI/CD, maior legibilidade dos testes, suporte aprimorado a testes assíncronos e uma estrutura mais flexível para organização e execução dos testes.
+Essas atualizações garantem escolhas mais sustentáveis a longo prazo.
 
 ### Arquitetura e Organização
 
@@ -47,14 +48,16 @@ O código legado apresentava forte acoplamento, responsabilidades múltiplas por
 
 Durante a refatoração, aplicamos princípios de Programação Orientada a Objetos, SOLID e Código limpo.
 
+O uso de tipos `enum` em vez de simples strings traz vantagens, tanto em termos de segurança, quanto de manutenibilidade e clareza de código e padronização.
+
 Isso resultou em um sistema mais coeso, desacoplado e de fácil evolução.
 
 ### Expansão de Funcionalidades
 
-Para suportar a inclusão de novas formas geométricas, foi criada a interface IFormaGeometrica, definindo o contrato comum a ser seguido.
+Para suportar a inclusão de novas formas geométricas, foi criada a interface `IFormaGeometrica`, definindo o contrato comum a ser seguido.
 Cada nova forma deve implementar essa interface, garantindo consistência e extensibilidade.
 
-De forma similar, a interface ITradutor define o contrato necessário para adicionar suporte a novos idiomas.
+De forma similar, a interface `ITradutor` define o contrato necessário para adicionar suporte a novos idiomas.
 Isso permitiu a inclusão do idioma italiano com facilidade e clareza.
 
 ### Geração de Relatórios
