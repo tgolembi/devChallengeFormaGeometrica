@@ -12,16 +12,16 @@ namespace DevelopmentChallenge.Data.Models
 
 		public string Tipo => TipoFormaGeometrica.Trapezio.ToString();
 
-		public Trapezio (decimal baseMaior, decimal baseMenor, decimal altura, decimal lado1, decimal lado2)
+		public Trapezio (decimal baseMaior, decimal baseMenor, decimal altura, decimal ladoA, decimal ladoB)
 		{
-			if (baseMaior <= 0 || baseMenor <= 0 || altura <= 0 || lado1 <= 0 || lado2 <= 0)
+			if (baseMaior <= 0 || baseMenor <= 0 || altura <= 0 || ladoA <= 0 || ladoB <= 0)
 				throw new ArgumentException("Todos os lados e a altura devem ser maiores que zero.");
 
 			_baseMaior = baseMaior;
 			_baseMenor = baseMenor;
 			_altura = altura;
-			_ladoA = lado1;
-			_ladoB = lado2;
+			_ladoA = ladoA;
+			_ladoB = ladoB;
 		}
 
 		public decimal CalcularArea ()
