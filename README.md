@@ -37,10 +37,41 @@ Entrega:
 
 ## SOLUÇÃO PROPOSTA
 
-Foi decidido criar novos projetos usando .NET 8, já que esta versão tem suporte de longo prazo, maior desempenho e performance, novas funcionalidades e mais segurança.
+Foi decidido reestruturar o projeto usando .NET 8, versão com suporte de longo prazo (LTS), melhor desempenho, recursos atualizados e maior segurança.
+Essa atualização garante uma base tecnológica moderna e sustentável a longo prazo.
 
-Foi realizada uma arquitetura mais modular para facilita a manutenção e escalabilidade.
+### Arquitetura e Organização
 
-O código anterior tinha forte acoplamento, responsabilidades múltiplas em classes únicas, com uma lógica difícil de manter.
-Foi refatorada  utilizando os princípios SOLID e código limpo.
+Foi implementada arquitetura modular, visando facilitar a manutenção, escalabilidade e reutilização de código.
+O código legado apresentava forte acoplamento, responsabilidades múltiplas por classe e uma lógica de difícil compreensão e manutenção.
 
+Durante a refatoração, aplicamos princípios de Programação Orientada a Objetos, SOLID e Código limpo.
+
+Isso resultou em um sistema mais coeso, desacoplado e de fácil evolução.
+
+### Expansão de Funcionalidades
+
+Para suportar a inclusão de novas formas geométricas, foi criada a interface IFormaGeometrica, definindo o contrato comum a ser seguido.
+Cada nova forma deve implementar essa interface, garantindo consistência e extensibilidade.
+
+De forma similar, a interface ITradutor define o contrato necessário para adicionar suporte a novos idiomas.
+Isso permitiu a inclusão do idioma italiano com facilidade e clareza.
+
+### Geração de Relatórios
+
+A classe `ReportGenerator`, gerar os relatórios combinando a lista de formas geométricas com seus respectivos tradutores, de acordo com o respectivo idioma.
+Isso garante que o sistema seja extensível tanto em formas quanto em idiomas.
+
+### Testes Automatizados
+
+Foram implementados testes para validar o comportamento das novas formas geométricas (incluíndo trapézio), 
+e a tradução para um novo novo idioma adicionado (italiano).
+
+Esses testes asseguram a confiabilidade da solução e reduzem o risco de regressões futuras.
+
+
+## Melhorias Futuras
+
+Embora a solução atual atenda plenamente aos requisitos do projeto, é possível melhorar o suporte a múltiplos idiomas no futuro, usando arquivos .resx e IStringLocalizer.
+
+No entanto, optei por manter uma abordagem manual e controlada neste momento, para garantir a entrega no prazo e com qualidade, deixando essas melhorias para versões futuras.
