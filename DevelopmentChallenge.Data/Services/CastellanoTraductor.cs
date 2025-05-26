@@ -19,6 +19,7 @@ namespace DevelopmentChallenge.Data.Services
 				TipoFormaGeometrica.Cuadrado => cantidad == 1 ? "Cuadrado" : "Cuadrados",
 				TipoFormaGeometrica.Circulo => cantidad == 1 ? "Círculo" : "Círculos",
 				TipoFormaGeometrica.TrianguloEquilatero => cantidad == 1 ? "Triángulo" : "Triángulos",
+				TipoFormaGeometrica.Trapezio => cantidad == 1 ? "Trapecio" : "Trapecios",
 				_ => cantidad == 1 ? tipo : tipo + "s"
 			} : tipo + "s";
 
