@@ -6,6 +6,7 @@ namespace DevelopmentChallenge.Data.Enums
 	{
 		Cuadrado,
 		Circulo,
-		TrianguloEquilatero
+		TrianguloEquilatero,
+		Trapezio
 	}
 }
