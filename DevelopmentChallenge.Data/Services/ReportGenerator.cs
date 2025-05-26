@@ -17,13 +17,23 @@ namespace DevelopmentChallenge.Data.Services
 				case Idioma.Ingles:
 					traductor = new InglesTraductor();
 					break;
+				case Idioma.Italiano:
+					traductor = new ItalianoTraductor();
+					break;
 				default:
 					traductor = new CastellanoTraductor();
 					break;
 			}
 
 			if (formas == null || !formas.Any())
-				return idioma == Idioma.Castellano ? "<h1>Lista vacía de formas!</h1>" : "<h1>Empty list of shapes!</h1>";
+			{
+				if (idioma == Idioma.Ingles)
+					return "<h1>Empty list of shapes!</h1>";
+				if (idioma == Idioma.Italiano)
+					return "<h1>Elenco vuoto di forme</h1>";
+
+				return "<h1>Lista vacía de formas!</h1>";
+			}
 
 			var sb = new System.Text.StringBuilder();
 			sb.Append(traductor.ObtenerEncabezado());
