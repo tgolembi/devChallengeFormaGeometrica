@@ -57,12 +57,11 @@ Isso resultou em um sistema mais coeso, desacoplado e de fácil evolução.
 Para suportar a inclusão de novas formas geométricas, foi criada a interface `IFormaGeometrica`, definindo o contrato comum a ser seguido.
 Cada nova forma deve implementar essa interface, garantindo consistência e extensibilidade.
 
-De forma similar, a interface `ITradutor` define o contrato necessário para adicionar suporte a novos idiomas.
-Isso permitiu a inclusão do idioma italiano com facilidade e clareza.
+Os textos dos idiomas foram incluídos em arquivos de recursos .resx, centralizando a responsabilidade da tradução e localização num único lugar, separando da lógica de negócio. Usando resx, permite no Visual Studio 2022 editar os idiomas numa interface de planilha, podendo comparar facilmente um idioma com outro. Isso também permitiu a inclusão do idioma italiano com facilidade e clareza, inclusive nos testes.
 
 ### Geração de Relatórios
 
-A classe `ReportGenerator`, gerar os relatórios combinando a lista de formas geométricas com seus respectivos tradutores, de acordo com o respectivo idioma.
+A classe `ReportGenerator`, gerar os relatórios combinando a lista de formas geométricas de acordo com a cultura (idioma) enviado.
 Isso garante que o sistema seja extensível tanto em formas quanto em idiomas.
 
 ### Testes Automatizados
@@ -70,11 +69,6 @@ Isso garante que o sistema seja extensível tanto em formas quanto em idiomas.
 Foram implementados testes para validar o comportamento das novas formas geométricas (incluíndo trapézio), 
 e a tradução para um novo novo idioma adicionado (italiano).
 
+Os testes foram refatorados para usar `[Theory]` e `[InlineData(idioma, resultadoEsperado)]` para facilitar incluir um idioma novo para ser feito naquele mesmo teste, sem que o teste precise ser modificado, apenas incluindo uma novo InlineData com a string do idioma que se deseja testar.
+
 Esses testes asseguram a confiabilidade da solução e reduzem o risco de regressões futuras.
-
-
-## Melhorias Futuras
-
-Embora a solução atual atenda plenamente aos requisitos do projeto, é possível melhorar o suporte a múltiplos idiomas no futuro, usando arquivos .resx e IStringLocalizer.
-
-No entanto, optei por manter uma abordagem manual e controlada neste momento, para garantir a entrega no prazo e com qualidade, deixando essas melhorias para versões futuras.

@@ -7,53 +7,38 @@ namespace DevelopmentChallenge.Data.Tests
 {
 	public class DataTests
 	{
-		[Fact]
-		public void TestResumenListaVacia()
+		[Theory]
+		[InlineData(Idioma.Castellano, "<h1>Lista vacía de formas!</h1>")]
+		[InlineData(Idioma.Ingles, "<h1>Empty list of shapes!</h1>")]
+		[InlineData(Idioma.Italiano, "<h1>Elenco vuoto di forme!</h1>")]
+		public void TestResumenListaVacia(Idioma idioma, string esperado)
 		{
-			var resumen = ReportGenerator.Imprimir(new List<IFormaGeometrica>(), Idioma.Castellano);
-			Assert.Equal("<h1>Lista vacía de formas!</h1>", resumen);
+			var resumen = ReportGenerator.Imprimir(new List<IFormaGeometrica>(), idioma);
+			Assert.Equal(esperado, resumen);
 		}
 
-		[Fact]
-		public void TestResumenListaVaciaFormasEnIngles()
-		{
-			var resumen = ReportGenerator.Imprimir(new List<IFormaGeometrica>(), Idioma.Ingles);
-			Assert.Equal("<h1>Empty list of shapes!</h1>", resumen);
-		}
-
-		[Fact]
-		public void TestResumenListaVaciaFormasEnItaliano()
-		{
-			var resumen = ReportGenerator.Imprimir(new List<IFormaGeometrica>(), Idioma.Italiano);
-			Assert.Equal("<h1>Elenco vuoto di forme</h1>", resumen);
-		}
-
-		[Fact]
-		public void TestResumenListaConUnCuadrado()
+		[Theory]
+		[InlineData(Idioma.Castellano, "<h1>Reporte de formas</h1>1 Cuadrado | Area 25,00 | Perimetro 20,00 <br/>TOTAL:<br/>1 formas | Area 25,00 | Perimetro 20,00")]
+		[InlineData(Idioma.Italiano, "<h1>Rapporto sulle forme</h1>1 Quadrato | Area 25,00 | Perimetro 20,00 <br/>TOTAL:<br/>1 forme | Area 25,00 | Perimetro 20,00")]
+		public void TestResumenListaConUnCuadrado(Idioma idioma, string esperado)
 		{
 			var formas = new List<IFormaGeometrica> { new Cuadrado(5) };
-			var resumen = ReportGenerator.Imprimir(formas, Idioma.Castellano);
-			Assert.Equal("<h1>Reporte de Formas</h1>1 Cuadrado | Area 25,00 | Perimetro 20,00 <br/>TOTAL:<br/>1 formas Perimetro 20,00 Area 25,00", resumen);
+			var resumen = ReportGenerator.Imprimir(formas, idioma);
+			Assert.Equal(esperado, resumen);
 		}
 
-		[Fact]
-		public void TestResumenListaConUnTrapezio()
+		[Theory]
+		[InlineData(Idioma.Castellano, "<h1>Reporte de formas</h1>1 Trapecio | Area 24,00 | Perimetro 25,00 <br/>TOTAL:<br/>1 formas | Area 24,00 | Perimetro 25,00")]
+		public void TestResumenListaConUnTrapezio(Idioma idioma, string esperado)
 		{
-			var formas = new List<IFormaGeometrica> { new Trapezio(baseMaior: 10, baseMenor: 6, altura: 3, ladoA: 5, ladoB: 4) };
+			var formas = new List<IFormaGeometrica> { new Trapezio(10, 6, 3, 5, 4) };
 			var resumen = ReportGenerator.Imprimir(formas, Idioma.Castellano);
-			Assert.Equal("<h1>Reporte de Formas</h1>1 Trapecio | Area 24,00 | Perimetro 25,00 <br/>TOTAL:<br/>1 formas Perimetro 25,00 Area 24,00", resumen);
+			Assert.Equal(esperado, resumen);
 		}
 
-		[Fact]
-		public void TestResumenListaConUnCuadradoEnItaliano()
-		{
-			var formas = new List<IFormaGeometrica> { new Cuadrado(5) };
-			var resumen = ReportGenerator.Imprimir(formas, Idioma.Italiano);
-			Assert.Equal("<h1>Rapporto sulle forme</h1>1 Quadrato | Area 25,00 | Perimetro 20,00 <br/>TOTAL:<br/>1 forme Perimetro 20,00 Area 25,00", resumen);
-		}
-
-		[Fact]
-		public void TestResumenListaConMasCuadrados()
+		[Theory]
+		[InlineData(Idioma.Ingles, "<h1>Shapes report</h1>3 Squares | Area 35.00 | Perimeter 36.00 <br/>TOTAL:<br/>3 shapes | Area 35.00 | Perimeter 36.00")]
+		public void TestResumenListaConMasCuadrados(Idioma idioma, string esperado)
 		{
 			var formas = new List<IFormaGeometrica>
 			{
@@ -61,12 +46,15 @@ namespace DevelopmentChallenge.Data.Tests
 				new Cuadrado(1),
 				new Cuadrado(3)
 			};
-			var resumen = ReportGenerator.Imprimir(formas, Idioma.Ingles);
-			Assert.Equal("<h1>Shapes report</h1>3 Squares | Area 35.00 | Perimeter 36.00 <br/>TOTAL:<br/>3 shapes Perimeter 36.00 Area 35.00", resumen);
+			var resumen = ReportGenerator.Imprimir(formas, idioma);
+			Assert.Equal(esperado, resumen);
 		}
 
-		[Fact]
-		public void TestResumenListaConMasTipos()
+		[Theory]
+		[InlineData(Idioma.Ingles, "Shapes report")]
+		[InlineData(Idioma.Castellano, "Reporte de formas")]
+		[InlineData(Idioma.Italiano, "Rapporto sulle forme")]
+		public void TestResumenListaConMasTipos(Idioma idioma, string encabezadoEsperado)
 		{
 			var formas = new List<IFormaGeometrica>
 			{
@@ -79,46 +67,8 @@ namespace DevelopmentChallenge.Data.Tests
 				new TrianguloEquilatero(4.2m)
 			};
 
-			var resumen = ReportGenerator.Imprimir(formas, Idioma.Ingles);
-			Assert.Contains("Shapes report", resumen);
-			Assert.Contains("TOTAL:", resumen);
-		}
-
-		[Fact]
-		public void TestResumenListaConMasTiposEnCastellano()
-		{
-			var formas = new List<IFormaGeometrica>
-			{
-				new Cuadrado(5),
-				new Circulo(3),
-				new TrianguloEquilatero(4),
-				new Cuadrado(2),
-				new TrianguloEquilatero(9),
-				new Circulo(2.75m),
-				new TrianguloEquilatero(4.2m)
-			};
-
-			var resumen = ReportGenerator.Imprimir(formas, Idioma.Castellano);
-			Assert.Contains("Reporte de Formas", resumen);
-			Assert.Contains("TOTAL:", resumen);
-		}
-
-		[Fact]
-		public void TestResumenListaConMasTiposEnItaliano()
-		{
-			var formas = new List<IFormaGeometrica>
-			{
-				new Cuadrado(5),
-				new Circulo(3),
-				new TrianguloEquilatero(4),
-				new Cuadrado(2),
-				new TrianguloEquilatero(9),
-				new Circulo(2.75m),
-				new TrianguloEquilatero(4.2m)
-			};
-
-			var resumen = ReportGenerator.Imprimir(formas, Idioma.Italiano);
-			Assert.Contains("Rapporto sulle forme", resumen);
+			var resumen = ReportGenerator.Imprimir(formas, idioma);
+			Assert.Contains(encabezadoEsperado, resumen);
 			Assert.Contains("TOTAL:", resumen);
 		}
 	}

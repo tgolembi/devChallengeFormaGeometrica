@@ -1,42 +1,31 @@
 ﻿using DevelopmentChallenge.Data.Enums;
 using DevelopmentChallenge.Data.Models;
+using System.Globalization;
+using System.Text;
 
 namespace DevelopmentChallenge.Data.Services
 {
 	public static class ReportGenerator
 	{
-		public static string Imprimir (IEnumerable<IFormaGeometrica> formas, Idioma idioma)
+		public static string Imprimir(IEnumerable<IFormaGeometrica> formas, Idioma idioma)
 		{
-			ITraductor traductor;
-
-			switch (idioma)
+			var cultura = idioma switch
 			{
-				case Idioma.Castellano:
-					traductor = new CastellanoTraductor();
-					break;
-				case Idioma.Ingles:
-					traductor = new InglesTraductor();
-					break;
-				case Idioma.Italiano:
-					traductor = new ItalianoTraductor();
-					break;
-				default:
-					traductor = new CastellanoTraductor();
-					break;
-			}
+				Idioma.Castellano => new CultureInfo("es"),
+				Idioma.Ingles => new CultureInfo("en"),
+				Idioma.Italiano => new CultureInfo("it"),
+				_ => new CultureInfo("es")
+			};
+
+			CultureInfo.CurrentUICulture = cultura;
 
 			if (formas == null || !formas.Any())
 			{
-				if (idioma == Idioma.Ingles)
-					return "<h1>Empty list of shapes!</h1>";
-				if (idioma == Idioma.Italiano)
-					return "<h1>Elenco vuoto di forme</h1>";
-
-				return "<h1>Lista vacía de formas!</h1>";
+				return $"<h1>{ResourceLocator.Obter("EmptyList", cultura)}</h1>";
 			}
 
-			var sb = new System.Text.StringBuilder();
-			sb.Append(traductor.ObtenerEncabezado());
+			var sb = new StringBuilder();
+			sb.Append($"<h1>{ResourceLocator.Obter("ShapesReport", cultura)}</h1>");
 
 			var resumenPorTipo = formas
 				.GroupBy(f => f.Tipo)
@@ -53,13 +42,23 @@ namespace DevelopmentChallenge.Data.Services
 
 			foreach (var r in resumenPorTipo)
 			{
-				sb.Append(traductor.FormatearLinea(r.Cantidad, r.Tipo, r.Area, r.Perimetro));
+				var chaveTipo = $"{r.Tipo}_{(r.Cantidad == 1 ? "Singular" : "Plural")}";
+				string nomeFormaTraduzida = ResourceLocator.Obter(chaveTipo, cultura);
+
+				sb.Append($"{r.Cantidad} {nomeFormaTraduzida} | ");
+				sb.Append($"{ResourceLocator.Obter("Area", cultura)} {r.Area.ToString("N2", cultura)} | ");
+				sb.Append($"{ResourceLocator.Obter("Perimeter", cultura)} {r.Perimetro.ToString("N2", cultura)} <br/>");
+
 				totalFormas += r.Cantidad;
 				totalArea += r.Area;
 				totalPerimetro += r.Perimetro;
 			}
 
-			sb.Append(traductor.ObtenerTotal(totalFormas, totalArea, totalPerimetro));
+			sb.Append($"{ResourceLocator.Obter("Total", cultura)}:<br/>");
+			sb.Append($"{totalFormas} {ResourceLocator.Obter("Shapes", cultura)} | ");
+			sb.Append($"{ResourceLocator.Obter("Area", cultura)} {totalArea.ToString("N2", cultura)} | ");
+			sb.Append($"{ResourceLocator.Obter("Perimeter", cultura)} {totalPerimetro.ToString("N2", cultura)}");
+
 			return sb.ToString();
 		}
 	}
