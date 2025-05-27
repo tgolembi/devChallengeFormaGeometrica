@@ -43,7 +43,7 @@ namespace DevelopmentChallenge.Data.Services
 			foreach (var r in resumenPorTipo)
 			{
 				var chaveTipo = $"{r.Tipo}_{(r.Cantidad == 1 ? "Singular" : "Plural")}";
-				string nomeFormaTraduzida = ResourceLocator.Obter(chaveTipo, cultura);
+				string? nomeFormaTraduzida = ResourceLocator.Obter(chaveTipo, cultura);
 
 				sb.Append($"{r.Cantidad} {nomeFormaTraduzida} | ");
 				sb.Append($"{ResourceLocator.Obter("Area", cultura)} {r.Area.ToString("N2", cultura)} | ");
