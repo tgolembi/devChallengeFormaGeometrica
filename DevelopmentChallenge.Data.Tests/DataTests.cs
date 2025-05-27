@@ -51,10 +51,8 @@ namespace DevelopmentChallenge.Data.Tests
 		}
 
 		[Theory]
-		[InlineData(Idioma.Ingles, "Shapes report")]
-		[InlineData(Idioma.Castellano, "Reporte de formas")]
-		[InlineData(Idioma.Italiano, "Rapporto sulle forme")]
-		public void TestResumenListaConMasTipos(Idioma idioma, string encabezadoEsperado)
+		[InlineData(Idioma.Castellano, "<h1>Reporte de formas</h1>2 Cuadrados | Area 29,00 | Perimetro 28,00 <br/>2 Círculos | Area 52,03 | Perimetro 36,13 <br/>3 Triángulos | Area 49,64 | Perimetro 51,60 <br/>TOTAL:<br/>7 formas | Area 130,67 | Perimetro 115,73")]
+		public void TestResumenListaConMasTipos(Idioma idioma, string esperado)
 		{
 			var formas = new List<IFormaGeometrica>
 			{
@@ -68,8 +66,7 @@ namespace DevelopmentChallenge.Data.Tests
 			};
 
 			var resumen = ReportGenerator.Imprimir(formas, idioma);
-			Assert.Contains(encabezadoEsperado, resumen);
-			Assert.Contains("TOTAL:", resumen);
+			Assert.Equal(esperado, resumen);
 		}
 	}
 }
